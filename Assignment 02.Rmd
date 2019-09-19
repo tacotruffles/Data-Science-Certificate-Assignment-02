@@ -39,7 +39,7 @@ library('tidyverse')
 
 
     `<ANSWER BELOW>`
-    Goto `Help` and then `Cheatsheets`
+    Goto `Help` => `Cheatsheets` => `RStudio Cheatsheet`
     `<ANSWER ABOVE>`
 
 
