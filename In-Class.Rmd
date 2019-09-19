@@ -13,39 +13,50 @@ dat = ggplot2::diamonds
 
 Display first 10 rows of `dat` dataset
 ```{r}
-
+  head(dat, 10)
 ```
 
 
 Create a chart to look at the distribution of `price`
 ```{r}
-
+  ggplot(data = dat, mapping=aes(x = price)) +
+    geom_histogram(bins = 15)
+  
 ```
 
 Create a chart to look at the distribution of `price` broken down by `clarity`
 ```{r}
-
+ggplot(data = dat, mapping=aes(x = price)) +
+    geom_histogram(bins = 10)+
+    facet_wrap(~clarity, scales = 'free_y')
 ```
 
 Create a different chart to illustrate the same thing as above
 ```{r}
-
+ggplot(data = dat, mapping=aes(x = price)) +
+    geom_density() +
+    facet_wrap(~clarity, scales = 'free_y')
 ```
 
 Examine variables: `x`, `y`, and `z` -- what do you notice?
 ```{r}
-
+ggplot(dat, aes(x = z, y = y)) +
+  geom_point()
 ```
 
 
 Show the relationship between `carat` and `price`  --  fit a curve to it
 ```{r}
-
+ggplot(dat, aes(x = carat, y = price)) +
+  geom_point() +
+  geom_smooth()
 ```
 
 How does your curve look? Could you change the function it uses to use a linear model?
 ```{r}
-
+ggplot(dat, aes(x = carat, y = price)) +
+  geom_point() +
+  geom_smooth(method = 'lm')
 ```
 
 
@@ -53,16 +64,30 @@ How does your curve look? Could you change the function it uses to use a linear 
 Create 3 more plots that you think are interesting.
 Add a title, subtitle, labels, and a caption where they make sense
 ```{r}
-
+ggplot(dat, aes(x = carat, y = price)) +
+  geom_point() +
+  geom_smooth(method = 'lm') +
+  labs(title = 'diamonds')
 ```
 
 ```{r}
-
+ggplot(dat, aes(x = carat, y = price)) +
+  geom_point() +
+  geom_smooth(method = 'lm') +
+  labs(title = 'diamonds')
 ```
 
 ```{r}
-
+ggplot(dat, aes(x = carat, y = price)) +
+  geom_point() +
+  geom_smooth(method = 'lm') +
+  labs(title = 'diamonds', subtitle = 'your best friend', caption = 'the right-hand corner') +
+  xlab('x-label override') + 
+  ylab('y-label override')
   
+```
+```{r}
+
 ```
 
 

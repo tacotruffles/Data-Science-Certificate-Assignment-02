@@ -1,7 +1,7 @@
 ---
 title: "Assignment 02"
-author: "Scott Stoltzman"
-date: "5/12/2019"
+author: "John Dawes"
+date: "9/18/2019"
 output: html_document
 ---
 
@@ -30,7 +30,7 @@ library('tidyverse')
     
     
     `<ANSWER BELOW>`
-    PUT YOUR ANSWER HERE
+    `my_variable` is mispelled.
     `<ANSWER ABOVE>`
     
     
@@ -39,7 +39,7 @@ library('tidyverse')
 
 
     `<ANSWER BELOW>`
-    PUT YOUR ANSWER HERE
+    Goto `Help` and then `Cheatsheets`
     `<ANSWER ABOVE>`
 
 
