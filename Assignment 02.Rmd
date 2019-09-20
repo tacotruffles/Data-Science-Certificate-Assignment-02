@@ -102,7 +102,8 @@ twoHrsLateOnTimeDeparture
 ```{r}
 # Were delayed by at least an hour, but made up over 30 minutes in flight
 twoHrsLateOnTimeDeparture <- flights %>%
-  filter(dep_delay >= 60 & arr_delay <= 30) %>% 
+  #filter(dep_delay >= 60 & arr_delay <= 30) %>% 
+  filter(dep_delay >= 60  & (dep_delay > arr_delay + 30)) %>%
   select(flight, carrier, dest, arr_delay, dep_delay, everything())
 
 twoHrsLateOnTimeDeparture
@@ -111,9 +112,10 @@ twoHrsLateOnTimeDeparture
 ```{r}
 # Departed between midnight and 6am (inclusive)
 depBetweenMidnightandSixAM <- flights %>%
-  filter(hour <= 6) %>% 
+  mutate(dep_hour = dep_time %/% 100) %>%
+  filter(dep_hour <= 6) %>% 
   arrange(desc(hour),desc(minute)) %>%
-  select(dep_time, flight, carrier, dest, hour, minute, dep_delay, everything())
+  select(dep_time, dep_hour, flight, carrier, dest, hour, minute, dep_delay, everything())
 depBetweenMidnightandSixAM
 ```
 
