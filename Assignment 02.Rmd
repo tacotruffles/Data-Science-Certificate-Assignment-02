@@ -30,7 +30,7 @@ library('tidyverse')
     
     
     `<ANSWER BELOW>`
-    `my_variable` is mispelled.
+    `my_variable` is misspelled.
     `<ANSWER ABOVE>`
     
     
@@ -55,23 +55,106 @@ Find all flights that
   7. Departed between midnight and 6am (inclusive)
 
 ```{r}
+# Flights with arrival Delays of two or more hours
+twoHourDelay <- flights %>%
+  filter(arr_delay > 120) %>%
+  select(flight, arr_delay, everything())
 
+twoHourDelay
 ```
 
+```{r}
+# Flew to Houston (IAH or HOU)
+houstonFlights <- flights %>%
+  filter(dest == "IAH" | dest == 'HOU') %>% 
+  select(flight, dest, everything())
+
+houstonFlights
+```
+
+```{r}
+# Were operated by United, American, or Delta
+flightOps <- flights %>%
+  filter(carrier == "AA" | carrier == 'UA' | carrier == 'DL') %>% 
+  select(flight, carrier, dest, everything())
+
+flightOps
+```
+
+```{r}
+# Departed in summer (July, August, and September)
+summerFlights <- flights %>%
+  filter(month == 7 | month == 8 | month == 9) %>% 
+  select(flight, carrier, dest, everything())
+
+summerFlights
+```
+
+```{r}
+# Arrived more than two hours late, but didn’t leave late
+twoHrsLateOnTimeDeparture <- flights %>%
+  filter(arr_delay > 120 & dep_delay == 0) %>% 
+  select(flight, carrier, dest, arr_delay, dep_delay, everything())
+
+twoHrsLateOnTimeDeparture
+```
+
+```{r}
+# Were delayed by at least an hour, but made up over 30 minutes in flight
+twoHrsLateOnTimeDeparture <- flights %>%
+  filter(dep_delay >= 60 & arr_delay <= 30) %>% 
+  select(flight, carrier, dest, arr_delay, dep_delay, everything())
+
+twoHrsLateOnTimeDeparture
+```
+
+```{r}
+# Departed between midnight and 6am (inclusive)
+depBetweenMidnightandSixAM <- flights %>%
+  filter(hour < 7) %>% 
+  arrange(desc(hour),desc(minute)) %>%
+  select(dep_time, flight, carrier, dest, hour, minute, dep_delay, everything())
+depBetweenMidnightandSixAM
+```
 
 Another useful dplyr filtering helper is between(). What does it do? Can you use it to simplify the code needed to answer the previous challenges?
 ```{r}
+# between() filter values within a numerical boundary
+summerFlights <- flights %>%
+  filter(between(month, 7, 9)) %>% 
+  select(flight, carrier, dest, everything())
 
+summerFlights
 ```
 
 
 How many flights have a missing dep_time? What other variables are missing? What might these rows represent?
 ```{r}
+# Count of flights with missing departure time
+missingDepTime <- flights %>%
+  filter(is.na(dep_time)) %>% 
+  select(flight, carrier, dest, everything()) %>%
+  count()
 
+missingDepTime
+
+# Find which columns contain NA
+sapply(flights, function(x)!all(!is.na(x)))
+
+# Certain columns with missing data or NA in combination would 
+# mean a flight was cancelled.
 ```
 
 Why is NA ^ 0 not missing? Why is NA | TRUE not missing? Why is FALSE & NA not missing? Can you figure out the general rule? (NA * 0 is a tricky counterexample!)
 ```{r}
+# Type coercion of NA to 0 in => 0 ^ 0 = 1
+NA ^ 0
 
+# Type coercion of NA to FALSE in boolean statments
+NA | TRUE # F | T = T
+FALSE & NA # F & F = F
+
+# No type coercion in multiplication????
+NA * 0
 ```
 
