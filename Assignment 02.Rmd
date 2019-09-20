@@ -111,7 +111,7 @@ twoHrsLateOnTimeDeparture
 ```{r}
 # Departed between midnight and 6am (inclusive)
 depBetweenMidnightandSixAM <- flights %>%
-  filter(hour < 7) %>% 
+  filter(hour <= 6) %>% 
   arrange(desc(hour),desc(minute)) %>%
   select(dep_time, flight, carrier, dest, hour, minute, dep_delay, everything())
 depBetweenMidnightandSixAM
@@ -138,8 +138,11 @@ missingDepTime <- flights %>%
 
 missingDepTime
 
-# Find which columns contain NA
-sapply(flights, function(x)!all(!is.na(x)))
+# Find which columns contain NA - TRUE / FASE
+sapply(flights, function(x)!all(!is.na(x))) # TRUE / FALSE
+
+# Totals number of NAs in each colum
+colSums(is.na(flights)) 
 
 # Certain columns with missing data or NA in combination would 
 # mean a flight was cancelled.
